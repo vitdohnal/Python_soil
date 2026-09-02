@@ -32,14 +32,14 @@ def computePorosity(bulkDensity, gravWaterContent):
     # Fraction of pore space filled with water
     degreeSaturation = waterContent / porosity
 
-    print("\nTotal porosity [m^3/m^3] = ", format(porosity, '.3f'))
-    print("Void ratio [m^3/m^3] = ", format(voidRatio, '.3f'))
-    print("Volumetric water content [m^3/m^3] = ", format(waterContent, '.3f'))
-    print("Gas filled porosity [m^3/m^3] = ", format(gasPorosity, '.3f'))
-    print("Degree of saturation [-] =", format(degreeSaturation, '.3f'))
+    print("\nTotal porosity [m^3/m^3] = ", format(porosity, ".3f"))
+    print("Void ratio [m^3/m^3] = ", format(voidRatio, ".3f"))
+    print("Volumetric water content [m^3/m^3] = ", format(waterContent, ".3f"))
+    print("Gas filled porosity [m^3/m^3] = ", format(gasPorosity, ".3f"))
+    print("Degree of saturation [-] =", format(degreeSaturation, ".3f"))
 
 
-def computeStaturationWettness(bulkDensity):
+def computeSaturationWetness(bulkDensity):
     """Compute gravimetric water content corresponding to saturation."""
 
     waterDensity = 1000
@@ -57,16 +57,22 @@ def main():
     """Read user input, validate it, and calculate soil properties."""
 
     bulkDensity = float(input("Enter bulk density [kg/m^3]: "))
-    gravWaterContent = float(input("Enter gravimetric water content [kg/kg]: "))
+    gravWaterContent = float(
+        input("Enter gravimetric water content [kg/kg]: ")
+    )
 
     # Maximum possible gravimetric water content at saturation
-    satMassWettness = computeStaturationWettness(bulkDensity)
+    satMassWetness = computeSaturationWetness(bulkDensity)
 
     # Water content must be non-negative and below saturation
-    if (gravWaterContent >= 0) and (gravWaterContent < satMassWettness):
+    if 0 <= gravWaterContent < satMassWetness:
         computePorosity(bulkDensity, gravWaterContent)
     else:
-        print("Wrong Water Content! value at saturation = ", satMassWettness)
+        print(
+            "Wrong Water Content! value at saturation = ",
+            satMassWetness
+        )
 
 
-main()
+if __name__ == "__main__":
+    main()
